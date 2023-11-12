@@ -1,0 +1,82 @@
+/* App.css */
+body {
+    margin: 100px;
+}
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  h2 {
+    color: #333;
+    text-align: center;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #e8e8e8;
+    margin: 8px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .iconsAndButtons {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  
+  /* Responsive Styles */
+  @media (max-width: 600px) {
+    .container {
+      max-width: 100%;
+      border-radius: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .iconsAndButtons {
+      flex-direction: row; /* Stack items vertically on smaller screens */
+      align-items: flex-start; /* Adjust alignment if needed */
+   
+    }
+  }
+  

@@ -1,0 +1,25 @@
+.check-button {
+    position: relative;
+    font-size: 2.7em; /* Set the font size, adjust as needed */
+    cursor: pointer; /* Add a pointer cursor for interaction */
+    margin-right: 4px;
+    transition: transform 0.3s ease; /* Add a smooth transition effect on transform */
+  }
+  
+  .check-button:hover {
+    transform: scale(1.2); /* Increase the size on hover */
+    color: rgb(255, 69, 69);
+}
+
+#list-item {
+  text-decoration: line-through;
+  opacity: 0.3;
+}
+  
+ 
+  @media (max-width: 768px) {
+    .check-button {
+      font-size: 1.5em; /* Adjust the font size for smaller screens */
+    }
+  }
+  
