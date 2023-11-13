@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+
 import "./App.css";
 import "./Delete.css";
 import "./Edit.css";
@@ -17,11 +20,14 @@ function App() {
 
   const addToDo = () => {
     if (input.trim() === "") return;
+    // Check if the input value already exists in the storeInput array
+  const isDuplicate = storeInput.some((todo) => todo.list === input);
 
+  if (!isDuplicate) {
     setStoreInput((prevStoreInput) => {
       if (editId) {
         return prevStoreInput.map((todo) => 
-          todo.id === editId ? {...todo, list: input} : todo
+        todo.id === editId ? {...todo, list: input} : todo
         );
       } else {
         return [...prevStoreInput, {list: input, id: Date.now(), status: false}];
@@ -29,6 +35,16 @@ function App() {
     })
     setEditId(0);
     setInput("");
+  } else {
+    console.log('duplicate found');
+  
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong!",
+      footer: '<a href="#">Why do I have this issue?</a>'
+    });
+  }
   };
 
   const handleSubmit = (e) => {
