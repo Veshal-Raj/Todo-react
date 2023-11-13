@@ -1,21 +1,31 @@
 /* App.css */
 body {
     margin: 100px;
+
 }
 .container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #fcfdfd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 20px;
   }
   
   h2 {
     color: #333;
+    font-family: 'Agbalumo', sans-serif;
+    font-size: 45px;
     text-align: center;
   }
   
+  p {
+    font-family: 'Agbalumo', sans-serif;
+    padding-left: 5%;
+    
+
+  }
+
   form {
     margin-top: 20px;
   }
@@ -49,6 +59,7 @@ body {
   
   li {
     background-color: #e8e8e8;
+    
     margin: 8px 0;
     padding: 10px;
     border: 1px solid #ddd;

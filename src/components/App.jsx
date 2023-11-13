@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-// import Swal from 'sweetalert2';
 import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
+
 
 import "./App.css";
 import "./Delete.css";
@@ -15,8 +16,24 @@ function App() {
   const inputRef = useRef("null");
 
   useEffect(() => {
+    try {
+      const storedData = localStorage.getItem("todoListData");
+      console.log('stored Data -->',storedData)
+      if (storedData) {
+        setStoreInput(JSON.parse(storedData));
+      }
+    } catch (error) {
+      console.error("Error parsing JSON from local storage:", error);
+      // Handle the error as needed, for example, you can set an empty array
+      setStoreInput([]);
+    }
+
     inputRef.current.focus();
-  });
+  },[]);
+
+  useEffect(()=> {
+    // localStorage.setItem('todoListData',JSON.stringify(storeInput));
+  },[storeInput])
 
   const addToDo = () => {
     if (input.trim() === "") return;
@@ -29,20 +46,26 @@ function App() {
         return prevStoreInput.map((todo) => 
         todo.id === editId ? {...todo, list: input} : todo
         );
+        
       } else {
-        return [...prevStoreInput, {list: input, id: Date.now(), status: false}];
+        const updatedStoreInput = [...prevStoreInput, {list: input, id: Date.now(), status: false}];
+        
+        localStorage.setItem('todoListData',JSON.stringify(updatedStoreInput));
+        return updatedStoreInput;
       }
     })
+
     setEditId(0);
     setInput("");
+    
   } else {
     console.log('duplicate found');
   
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Something went wrong!",
-      footer: '<a href="#">Why do I have this issue?</a>'
+      text: "Duplicate cannot be added!",
+     
     });
   }
   };
@@ -52,9 +75,31 @@ function App() {
   };
 
   const onDelete = (id) => {
-    setStoreInput((prevStoreInput) =>
-      prevStoreInput.filter((todo) => todo.id !== id)
-    );
+    // Show a confirmation SweetAlert
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You will not be able to recover this todo item!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Remove the item from the React state
+      setStoreInput((prevStoreInput) =>
+        prevStoreInput.filter((todo) => todo.id !== id)
+      );
+
+      // Remove the item from local storage
+      const updatedStoreInput = storeInput.filter((todo) => todo.id !== id);
+      localStorage.setItem('todoListData', JSON.stringify(updatedStoreInput));
+
+      // Show success SweetAlert
+      Swal.fire('Deleted!', 'Your todo item has been deleted.', 'success');
+    }
+  });
   };
 
   const onComplete = (id) => {
@@ -94,7 +139,7 @@ function App() {
         <ul>
           {storeInput.map((todo) => (
             <li key={todo.id} id={todo.status ? "list-item" : ""}>
-              {todo.list}
+              <p>{todo.list}</p>
 
               <span className="iconsAndButtons">
                 <AiOutlineCheckCircle
